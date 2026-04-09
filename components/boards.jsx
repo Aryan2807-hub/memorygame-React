@@ -10,7 +10,7 @@ export function Board(){
   return(
     <div className="board">
       {cardVal.map((val,index)=>(
-        <Cards key={index}>{val}</Cards>
+        <Interactive key={index}>{val}</Interactive>
       ))}
     </div>
   )
