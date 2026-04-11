@@ -1,14 +1,11 @@
 import "./cards.css"
 import {useState} from  "react"
 
-export function Card(){
-  const [cardstate,setCardstate]=useState(false)
-  function handleclick(){
-    setCardstate(!cardstate)
-  }
+export function Card({index,flippedcards}){
+
   return(
-    <div className="card" onClick={handleclick}>
-      {cardstate ? "A" : "?"}
+    <div className="card" >
+      {flippedcards.includes(index) ? "A" : "?"}
     </div>
   )
 
