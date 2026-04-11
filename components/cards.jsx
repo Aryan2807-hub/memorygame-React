@@ -1,7 +1,7 @@
 import "./cards.css"
 import {useState} from  "react"
 
-export function Interactive(){
+export function Card(){
   const [cardstate,setCardstate]=useState(false)
   function handleclick(){
     setCardstate(!cardstate)

@@ -1,4 +1,4 @@
-import {Interactive} from "./cards.jsx"
+import {Card} from "./cards.jsx"
 import "./boards.css"
 
 
@@ -10,7 +10,7 @@ export function Board(){
   return(
     <div className="board">
       {cardVal.map((val,index)=>(
-        <Interactive key={index}>{val}</Interactive>
+        <Card key={index}>{val}</Card>
       ))}
     </div>
   )
