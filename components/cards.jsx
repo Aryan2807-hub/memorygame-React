@@ -1,11 +1,13 @@
 import "./cards.css"
-import {useState} from  "react"
 
-export function Card({index,flippedcards}){
+
+export function Card({index,flippedcards,click,emoji}){
+  
 
   return(
-    <div className="card" >
-      {flippedcards.includes(index) ? "A" : "?"}
+    <div className="card" 
+   onClick={()=>click(index)} >
+      {flippedcards.includes(index) ? emoji : ""}
     </div>
   )
 
