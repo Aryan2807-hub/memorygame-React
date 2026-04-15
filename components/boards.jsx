@@ -15,17 +15,18 @@ const initialCards = [
 const shuffledcards =[...initialCards].sort(()=>Math.random() - 0.5)
 
 export function Board(){  
-
+  
   const [cardVal ,setCardVal]=useState(
     shuffledcards.map((value,index)=>({
-        id:index,
-        value:value,
-        flipped:false
-      }
-    ))
+      id:index,
+      value:value,
+      flipped:false
+    }
+  ))
+  
+)
 
-  )
-
+  const winner=cardVal.every(card=>card.flipped)
   const [FlippedCards,setFlippedCards]=useState([]);
   const [Moves , setMoves] = useState(0)
 
@@ -59,6 +60,8 @@ function Clickhandler(index){
 
     } else {
       setMoves(prev=>prev+1)
+      
+
 
       // ❌ NO MATCH
       setTimeout(() => {
@@ -66,11 +69,29 @@ function Clickhandler(index){
       }, 900)
 
     }
+
   }
+  
+
+  }
+  
+  
+  function restartGame(){
+  const reshuffled = [...initialCards].sort(() => Math.random() - 0.5)
+
+  const newCards = reshuffled.map((value, index) => ({
+    id: index,
+    value: value,
+    flipped: false
+  }))
+
+  setCardVal(newCards)
+  setFlippedCards([])
+  setMoves(0)
 }
 
 
-    
+
 
 
 
@@ -79,6 +100,8 @@ function Clickhandler(index){
 
     <div className="logicBox">
       <div className="moves">Moves: {Moves}</div>
+      {winner && <div className="winner">You Win!</div>}
+      <button onClick={restartGame}>Restart</button>
     
         <div className="board">
 
