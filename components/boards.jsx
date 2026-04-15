@@ -1,4 +1,4 @@
-import {useState,useEffect} from  "react"
+import {useState} from  "react"
 
 
 
@@ -26,51 +26,73 @@ export function Board(){
 
   )
 
-  const [FlippedCards,setFlippedCards]=useState([])
+  const [FlippedCards,setFlippedCards]=useState([]);
+  const [Moves , setMoves] = useState(0)
 
-  function Clickhandler(index){
+function Clickhandler(index){
+
+  if (FlippedCards.length === 2) return
+  if (FlippedCards.includes(index)) return
+
+  const newFlipped = [...FlippedCards, index]
+  setFlippedCards(newFlipped)
+
+  // use NEW array (not old state)
+  if(newFlipped.length === 2){
+
+    const [firstIndex, secondIndex] = newFlipped
+
+    const firstcard = cardVal[firstIndex]
+    const secondcard = cardVal[secondIndex]
+
+    if(firstcard.value === secondcard.value){
       
-    if (FlippedCards.length === 2) return
-    if (FlippedCards.includes(index)) return
-    setFlippedCards([...FlippedCards,index])
-  }
-  useEffect(()=>{
-      if(FlippedCards.length===2){
-        const firstcard=cardVal[FlippedCards[0]];
-        const secondcard=cardVal[FlippedCards[1]];
-        if(firstcard.value===secondcard.value){
-        //match
-          const newCards=[...cardVal];
-          newCards[FlippedCards[0]].flipped=true;
-          newCards[FlippedCards[1]].flipped=true;
-        }
-      }
+      // ✅ MATCH
+      setCardVal(prev => {
+        const newcards = [...prev]
+        newcards[firstIndex].flipped = true
+        newcards[secondIndex].flipped = true
+        return newcards
+      })
 
+      setFlippedCards([])
 
+    } else {
+      setMoves(prev=>prev+1)
 
+      // ❌ NO MATCH
+      setTimeout(() => {
+        setFlippedCards([])
+      }, 900)
 
-      setTimeout(()=>{
-        setFlippedCards([]);
-      },900);
-      return()=>{
-      
     }
-  },[FlippedCards]);
+  }
+}
+
+
+    
+
 
 
 
   return(
-    <div className="board">
-      {cardVal.map((card,index)=>(
-        <Card 
-          key={card.id}
-          index={index}
-          flipcheck={card.flipped}
-          emoji={card.value}
-          flippedcards={FlippedCards}
-          click={Clickhandler}
-          ></Card>
-      ))}
+
+    <div className="logicBox">
+      <div className="moves">Moves: {Moves}</div>
+    
+        <div className="board">
+
+          {cardVal.map((card,index)=>(
+            <Card 
+            key={card.id}
+            flippedcards={FlippedCards}
+            click={Clickhandler}
+            cardobj={card}
+            index={index}
+            />
+          ))}
+        </div>
+    
     </div>
   )
 }
