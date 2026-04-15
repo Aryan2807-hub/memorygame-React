@@ -27,6 +27,7 @@ export function Board(){
   )
 
   const [FlippedCards,setFlippedCards]=useState([])
+
   function Clickhandler(index){
       
     if (FlippedCards.length === 2) return
@@ -35,11 +36,26 @@ export function Board(){
   }
   useEffect(()=>{
       if(FlippedCards.length===2){
-        setTimeout(()=>{
-          setFlippedCards([])
-        },900)
+        const firstcard=cardVal[FlippedCards[0]];
+        const secondcard=cardVal[FlippedCards[1]];
+        if(firstcard.value===secondcard.value){
+        //match
+          const newCards=[...cardVal];
+          newCards[FlippedCards[0]].flipped=true;
+          newCards[FlippedCards[1]].flipped=true;
+        }
       }
-    },[FlippedCards])
+
+
+
+
+      setTimeout(()=>{
+        setFlippedCards([]);
+      },900);
+      return()=>{
+      
+    }
+  },[FlippedCards]);
 
 
 
