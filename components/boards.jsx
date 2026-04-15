@@ -34,18 +34,19 @@ function Clickhandler(index){
 
   if (FlippedCards.length === 2) return
   if (FlippedCards.includes(index)) return
-
+  
   const newFlipped = [...FlippedCards, index]
   setFlippedCards(newFlipped)
-
+  
   // use NEW array (not old state)
   if(newFlipped.length === 2){
-
+    
     const [firstIndex, secondIndex] = newFlipped
-
+    
     const firstcard = cardVal[firstIndex]
     const secondcard = cardVal[secondIndex]
-
+    
+    setMoves(prev=>prev+1)
     if(firstcard.value === secondcard.value){
       
       // ✅ MATCH
@@ -59,7 +60,6 @@ function Clickhandler(index){
       setFlippedCards([])
 
     } else {
-      setMoves(prev=>prev+1)
       
 
 
